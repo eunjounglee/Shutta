@@ -15,8 +15,12 @@ namespace Shutta
             IsKwang = isKwang;
         }
 
-        private int _no; // 자바의 기본 접근 지정자와 다름
+        public Card(int no)
+        {
+            _no = no;
+        }
 
+        private int _no; // 자바의 기본 접근 지정자와 다름
         public int No
         {
             get
@@ -30,6 +34,7 @@ namespace Shutta
             //        _no = value;
             //}
         }
+
 
         // 3.0 auto property (자동으로 기반이 되는 필드를 생성해 줌)
         public bool IsKwang { get; }

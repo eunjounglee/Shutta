@@ -49,6 +49,7 @@
     <Compile Include="..\..\..\..\..\..\shutta\Program.cs">
       <Link>Program.cs</Link>
     </Compile>
+    <Compile Include="OrderType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="RuleType.cs" />

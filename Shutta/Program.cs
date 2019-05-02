@@ -8,7 +8,7 @@ namespace Shutta
 {
     class Program
     {
-        public const int PlayerCount = 2;
+        public const int PlayerCount = 3;
         public const int SeedMoney = 500;
         private const int BetMoney = 100;
 
@@ -18,6 +18,9 @@ namespace Shutta
             string inputText = Console.ReadLine();
             int input = int.Parse(inputText);
             RuleType ruleType = (RuleType)input;
+
+            Console.WriteLine("순서를 정합니다.");
+
 
 
             // 각 선수들이 시드 머니를 가진다.
@@ -29,10 +32,11 @@ namespace Shutta
                 else if (ruleType == RuleType.Advanced)
                     players.Add(new AdvancedPlayer(SeedMoney));
             }
-                
+
 
 
             int round = 1;
+            RunOrder(players);
             // 선수 중 파산(오링)하는 사람이 있을 때 까지 라운드를 진행한다.
             while (true)
             {
@@ -53,6 +57,9 @@ namespace Shutta
             }
         }
 
+
+
+
         private static void PrintMoney(List<Player> players)
         {
             for (int i = 0; i < players.Count; i++)
@@ -66,6 +73,24 @@ namespace Shutta
                     return false;
 
             return true;
+        }
+
+
+        static void RunOrder(List<Player> players)
+        {
+
+            // 딜러가 각 선수들에게 1장씩 카드를 돌린다
+            Dealer dealer = new Dealer();
+            foreach (Player player in players)
+                player.AddCard(dealer.FirstDraw());
+
+            // 각 선수들의 족보를 계산하고 출력한다.
+            for (int i = 0; i < players.Count; i++)
+            {
+                Player p = players[i];
+                p.OrderScore();
+                Console.WriteLine($"P{i} ({p[0]}) => {p.Score}");
+            }
         }
 
         static void RunRound(List<Player> players)
@@ -115,7 +140,7 @@ namespace Shutta
 
         private static Player FindWinner(List<Player> players)
         {
-             // return players.OrderByDescending(x => x.Score).First();
+            // return players.OrderByDescending(x => x.Score).First();
 
             int maxScore = 0;
             foreach (Player player in players)

@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace Shutta
 {
-    public enum RuleType
-    {
-        Basic = 1,
-        Advanced
-    }
+    
+    public enum FirstType
+        {
+            Basic = 1,
+            Advanced
+        }
+
 }
+
+

@@ -17,7 +17,7 @@ namespace Shutta
             Console.WriteLine("게임의 룰을 선택하세요. (1:기본룰, 2:확장룰)");
             string inputText = Console.ReadLine();
             int input = int.Parse(inputText);
-            RuleType ruleType = (RuleType)input;
+            FirstType firstType = (FirstType)input; //기본룰
 
             Console.WriteLine("순서를 정합니다.");
 
@@ -27,9 +27,9 @@ namespace Shutta
             List<Player> players = new List<Player>();
             for (int i = 0; i < PlayerCount; i++)
             {
-                if (ruleType == RuleType.Basic)
+                if (firstType == FirstType.Basic)
                     players.Add(new Player(SeedMoney));
-                else if (ruleType == RuleType.Advanced)
+                else if (firstType == FirstType.Basic)
                     players.Add(new AdvancedPlayer(SeedMoney));
             }
 

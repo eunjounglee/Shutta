@@ -20,7 +20,7 @@ namespace Shutta
 
         public int Money { get; set; }
 
-        private readonly List<Card> _cards;
+        protected readonly List<Card> _cards;
         private readonly List<Card> _firstcards;
 
         public void AddCard(Card card)

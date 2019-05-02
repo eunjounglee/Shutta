@@ -34,7 +34,7 @@ namespace Shutta
             //        _no = value;
             //}
         }
-
+       
 
         // 3.0 auto property (자동으로 기반이 되는 필드를 생성해 줌)
         public bool IsKwang { get; }

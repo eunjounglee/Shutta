@@ -10,7 +10,7 @@ namespace Shutta
     {
         public const int PlayerCount = 3;
 
-        public const int SeedMoney = 1000;
+        public const int SeedMoney = 10000;
         static void Main(string[] args)
         {
             Console.WriteLine("게임의 룰을 선택하세요. (1:기본룰, 2:확장룰)");
@@ -70,7 +70,6 @@ namespace Shutta
                         break;
                     }
                        
-
                     Console.WriteLine($"[Round {round++}]");
 
                     // 라운드를 진행한다

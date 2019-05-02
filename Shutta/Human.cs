@@ -13,7 +13,7 @@ namespace Shutta
 
         }
 
-        public override void DecideBettingType()
+        public override CallType DecideCallType(List<Player> players, int index)
         {
 
             throw new NotImplementedException();

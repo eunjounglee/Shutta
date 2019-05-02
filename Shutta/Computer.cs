@@ -13,9 +13,19 @@ namespace Shutta
 
         }
 
-        public override void DecideBettingType()
+        public override CallType DecideCallType(List<Player> players, int index)
         {
-
+            Player p = players[index];
+            if (p.Score < 4)
+            {
+                return CallType.Die;
+            }
+            else if( p.Score < 10 ) {
+                return CallType.Call;
+            }
+            else {
+                return CallType.Betting;
+            }
             throw new NotImplementedException();
         }
     }

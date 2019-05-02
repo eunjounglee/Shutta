@@ -62,6 +62,6 @@ namespace Shutta
             Score = 0;
         }
 
-        public abstract void DecideBettingType();
+        public abstract CallType DecideCallType(List<Player> players, int index);
     }
 }

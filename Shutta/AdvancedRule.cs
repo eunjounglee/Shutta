@@ -8,6 +8,7 @@ namespace Shutta
 {
     class AdvancedRule
     {
+        public static CallType callType = (CallType) 1;
         private const int BetMoney = 100;
         public static void PrintMoney(List<Player> players)
         {
@@ -22,6 +23,15 @@ namespace Shutta
                     return false;
 
             return true;
+        }
+
+        public static int FindBankrupt(List<Player> players)
+        {
+            foreach (Player player in players)
+                if (player.Money <= 0)
+                    return player.Index;
+
+            throw new Exception("파산자 없음");
         }
 
         public static int DecideOrder(List<Player> players)
@@ -55,10 +65,18 @@ namespace Shutta
             // 이전 라운드의 승자는 이번 라운드의 베팅 배수를 결정한다.
             // 단, 1라운드일 경우 선을 결정하여 베팅 배수를 결정한다.
             Console.WriteLine($"P[{winnerNo}] 는 이번 라운드의 배수를 선택하세요. (1: 1배, 2: 2배, 4: 4배, 8: 8배)");
-            string inputText = Console.ReadLine();
-            int input = int.Parse(inputText);
-            MultipleType multipleType = (MultipleType)input;
-
+            string inputText = "";
+            int input = 0;
+            if ( winnerNo == 0)
+            {
+                inputText = Console.ReadLine();
+                input = int.Parse(inputText);
+            }
+            else
+            {
+                input = 1;
+            }
+            
             // 선수들이 학교를 간다
             int totalBetMoney = 0;
 
@@ -74,9 +92,41 @@ namespace Shutta
                 for (int i = 0; i < 2; i++)
                     player.AddCard(dealer.Draw());
 
-            // 각 선수들이 가진 카드를 내림차순한다.
-            foreach (Player player in players)
-                players.OrderByDescending(x => x[0].No);
+            if (winnerNo == 0)
+            {
+                Player p = players[winnerNo];
+                Console.WriteLine($"P{winnerNo} ({p[0]}, {p[1]}) => {p.Score}");
+                Console.WriteLine("콜 유형를 선택하세요. (1: 콜(기본), 2: 베팅(+100원), 3: 다이(포기, 1/2만 돌려받음))");
+                inputText = Console.ReadLine();
+                input = int.Parse(inputText);
+                callType = (CallType)input;
+            }
+            else
+            {
+                callType = (CallType)2;
+            }
+           
+
+            if ( callType == CallType.Die)
+            {
+                Player p = players[winnerNo];
+                p.Money += BetMoney * input / 2;
+                totalBetMoney -= BetMoney * input / 2;
+
+                foreach (Player player in players)
+                {
+                    if (player.Index != winnerNo)
+                        player.Money = totalBetMoney / 2;
+                }
+
+            } else if (callType == CallType.Betting)
+            {
+                foreach (Player player in players)
+                {
+                    player.Money -= BetMoney * input;
+                    totalBetMoney += BetMoney * input;
+                }
+            }
 
             // 각 선수들의 족보를 계산하고 출력한다.
             for (int i = 0; i < players.Count; i++)
@@ -88,9 +138,6 @@ namespace Shutta
             }
 
             // 승자와 패자를 가린다.
-
-
-
             // 승자에게 모든 베팅 금액을 준다.
             if ( FindWinner(players).Count >= 2)
             {
@@ -130,5 +177,6 @@ namespace Shutta
             throw new Exception("승자를 찾을 수 없음");
         }
 
+        
     }
 }

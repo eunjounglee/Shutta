@@ -10,7 +10,7 @@ namespace Shutta
     {
         public const int PlayerCount = 3;
 
-        public const int SeedMoney = 500;
+        public const int SeedMoney = 1000;
         static void Main(string[] args)
         {
             Console.WriteLine("게임의 룰을 선택하세요. (1:기본룰, 2:확장룰)");
@@ -65,7 +65,11 @@ namespace Shutta
                 while (true)
                 {
                     if (AdvancedRule.CanRunRound(players) == false)
+                    {
+                        Console.WriteLine($"P[{AdvancedRule.FindBankrupt(players)}]는 파산자!");
                         break;
+                    }
+                       
 
                     Console.WriteLine($"[Round {round++}]");
 

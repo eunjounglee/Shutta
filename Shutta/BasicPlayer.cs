@@ -6,21 +6,18 @@ using System.Threading.Tasks;
 
 namespace Shutta
 {
-    public abstract class Player
+    public class BasicPlayer
     {
-        public static int _index = 0;
-        public Player(int money)
+
+        public BasicPlayer(int money)
         {
             Money = money;
             _cards = new List<Card>();
             _firstcards = new List<Card>();
-            Index = _index;
-            _index++;
         }
-      
 
         public int Money { get; set; }
-        public int Index { get; set; }
+
         private readonly List<Card> _cards;
         private readonly List<Card> _firstcards;
 
@@ -30,7 +27,7 @@ namespace Shutta
             _firstcards.Add(card);
         }
 
-    
+
         public virtual void CalculateScore()
         {
             if (_cards[0].No == _cards[1].No)
@@ -41,7 +38,7 @@ namespace Shutta
 
         public virtual void OrderScore()
         {
-             Score = _firstcards[0].No; // 카드숫자
+            Score = _firstcards[0].No; // 카드숫자
         }
 
 
@@ -62,7 +59,5 @@ namespace Shutta
             _cards.Clear();
             Score = 0;
         }
-
-        public abstract void DecideBettingType();
     }
 }

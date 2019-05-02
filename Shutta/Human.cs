@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 
 namespace Shutta
 {
-    public class AdvancedPlayer : Player
+    public class Human : Player
     {
-        public AdvancedPlayer(int money) : base(money)
+        public Human(int money) : base (money)
         {
+
         }
 
-        public override void CalculateScore()
+        public override void DecideBettingType()
         {
-            // 
+
+            throw new NotImplementedException();
         }
     }
 }

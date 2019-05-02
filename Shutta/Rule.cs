@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Shutta
 {
-        public enum OrderType
-        {
-            Basic = 1,
-            Advanced
-        }
+    public class Rule
+    {
+        protected const int BetMoney = 100;
+    }
 }
-

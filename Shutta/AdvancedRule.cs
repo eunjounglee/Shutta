@@ -26,7 +26,8 @@ namespace Shutta
 
         public static int DecideOrder(List<Player> players)
         {
-
+            foreach (Player player in players)
+                player.PrepareRound();
             // 딜러가 각 선수들에게 1장씩 카드를 돌린다
             Dealer dealer = new Dealer();
             foreach (Player player in players)
@@ -40,12 +41,12 @@ namespace Shutta
                 Console.WriteLine($"P{i} ({p[0]}) => {p.Score}");
             }
 
-            int winnerNo = FindWinner(players).Index;
+            int winnerNo = FindWinner(players)[0];
 
             return winnerNo;
         }
 
-        public static void RunRound(List<Player> players, int winnerNo)
+        public static int RunRound(List<Player> players, int winnerNo)
         {
             // 각 선수가 이전 라운드에서 받은 카드를 클리어한다.
             foreach (Player player in players)
@@ -73,6 +74,10 @@ namespace Shutta
                 for (int i = 0; i < 2; i++)
                     player.AddCard(dealer.Draw());
 
+            // 각 선수들이 가진 카드를 내림차순한다.
+            foreach (Player player in players)
+                players.OrderByDescending(x => x[0].No);
+
             // 각 선수들의 족보를 계산하고 출력한다.
             for (int i = 0; i < players.Count; i++)
             {
@@ -83,19 +88,32 @@ namespace Shutta
             }
 
             // 승자와 패자를 가린다.
-            Player winner = FindWinner(players);
 
-            //TODO : 승자가 1명 이상이면 베팅 머니를 돌려주고 라운드를 끝낸다.
 
 
             // 승자에게 모든 베팅 금액을 준다.
-            winner.Money += totalBetMoney;
+            if ( FindWinner(players).Count >= 2)
+            {
+                players[FindWinner(players)[0]].Money += totalBetMoney / 2;
+                players[FindWinner(players)[1]].Money += totalBetMoney / 2;
+
+                winnerNo = AdvancedRule.DecideOrder(players);
+                return winnerNo;
+            }
+            else
+            { 
+                winnerNo = FindWinner(players)[0];
+                players[winnerNo].Money += totalBetMoney;
+                return winnerNo;
+            }
+            
         }
 
-        public static Player FindWinner(List<Player> players)
+        public static List<int> FindWinner(List<Player> players)
         {
             // return players.OrderByDescending(x => x.Score).First();
-
+            int count = 0;
+            List<int> playerIndex = new List<int>();
             int maxScore = 0;
             foreach (Player player in players)
                 if (player.Score > maxScore)
@@ -103,10 +121,14 @@ namespace Shutta
 
             foreach (Player player in players)
                 if (player.Score == maxScore)
-                    return player;
-
+                {
+                    playerIndex.Add(player.Index);
+                    count++;
+                }
+            return playerIndex;
             // return null;
             throw new Exception("승자를 찾을 수 없음");
         }
+
     }
 }

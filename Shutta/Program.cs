@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Shutta
 {
-    
     class Program
     {
         public const int PlayerCount = 3;
@@ -56,9 +55,7 @@ namespace Shutta
                 {
                     players.Add(new Computer(SeedMoney));
                 }
-                
-                //
-                
+
                 int round = 1;
                 int winnerNo = 0;
                 
@@ -73,7 +70,7 @@ namespace Shutta
                     Console.WriteLine($"[Round {round++}]");
 
                     // 라운드를 진행한다
-                    AdvancedRule.RunRound(players, winnerNo);
+                    winnerNo = AdvancedRule.RunRound(players, winnerNo);
 
                     // 선수들이 가진 돈을 출력한다.
                     AdvancedRule.PrintMoney(players);
@@ -81,7 +78,6 @@ namespace Shutta
                     Console.WriteLine();
                 }
             }
-
         }
     }
 }

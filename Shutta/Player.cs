@@ -44,7 +44,6 @@ namespace Shutta
              Score = _firstcards[0].No; // 카드숫자
         }
 
-
         public int Score { get; set; }
 
         // indexer
@@ -54,12 +53,12 @@ namespace Shutta
             {
                 return _cards[index];
             }
-
         }
 
         public void PrepareRound()
         {
             _cards.Clear();
+            _firstcards.Clear();
             Score = 0;
         }
 

@@ -141,18 +141,65 @@ namespace Shutta
         private static Player FindWinner(List<Player> players)
         {
             // return players.OrderByDescending(x => x.Score).First();
-
             int maxScore = 0;
-            foreach (Player player in players)
-                if (player.Score > maxScore)
-                    maxScore = player.Score;
 
-            foreach (Player player in players)
-                if (player.Score == maxScore)
-                    return player;
+            for (int i = 0; i < players.Count; i++)
+            {
+                if (players[i].Score > maxScore)
+                    maxScore = players[i].Score;
+            }
 
-            // return null;
-            throw new Exception("승자를 찾을 수 없음");
+            //foreach (Player player in players)
+            //    if (player.Score > maxScore)
+            //        maxScore = player.Score;
+
+            if (players[0].Score == maxScore && players[1].Score == maxScore)
+                CompareScore(players[0], players[1]);
+
+            else if (players[1].Score == maxScore && players[2].Score == maxScore)
+                CompareScore(players[1], players[2]);
+
+            else if (players[2].Score == maxScore && players[0].Score == maxScore)
+                CompareScore(players[2], players[0]);
+
+            for (int i = 0; i < players.Count; i++)
+                if (players[i].Score == maxScore)
+                    return players[i];
+
+            throw new Exception("승자를 찾을 수 없음.");
+
+        }
+
+        public static Object CompareScore(Player playerOne, Player playerTwo)
+        {
+            int CardOne = playerOne.ShowCard(1) > playerOne.ShowCard(2) ?
+                playerOne.ShowCard(1) : playerOne.ShowCard(2);
+
+            // 플레이어가 가진 카드를 높은 순서대로 정렬. 
+            // return players.OrderByDescending(x => x.Score).First();
+
+            int CardTwo = playerTwo.ShowCard(1) > playerTwo.ShowCard(2) ?
+                playerTwo.ShowCard(1) : playerTwo.ShowCard(2);
+
+            // 같은 숫자를 가진 경우에는 판 돈을 반으로 나눈다. 
+            if (CardOne == CardTwo)
+            {
+                playerOne.Money += BetMoney / 2;
+                playerTwo.Money += BetMoney / 2;
+                return "승자가 두 명으로 게임을 다시 시작합니다.";
+            }
+
+            // 그 중 더 큰 숫자의 카드를 가진 사람이 이긴다. 
+            else if (CardOne > CardTwo)
+            {
+                playerOne.Money += BetMoney;
+                return playerOne;
+            }
+            else
+            {
+                playerTwo.Money += BetMoney;
+                return playerTwo;
+            }
+
         }
     }
-}

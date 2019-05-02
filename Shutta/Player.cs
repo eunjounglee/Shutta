@@ -56,6 +56,12 @@ namespace Shutta
 
         }
 
+        public int ShowCard(int index)
+        {
+            return _cards[index].No;
+        }
+
+
         public void PrepareRound()
         {
             _cards.Clear();

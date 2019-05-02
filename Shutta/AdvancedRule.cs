@@ -64,28 +64,20 @@ namespace Shutta
 
             // 이전 라운드의 승자는 이번 라운드의 베팅 배수를 결정한다.
             // 단, 1라운드일 경우 선을 결정하여 베팅 배수를 결정한다.
-            
-            if( winnerNo == 0)
-            {
-                Console.WriteLine($"P[{winnerNo}] 는 이번 라운드의 배수를 선택하세요. (1: 1배, 2: 2배, 4: 4배, 8: 8배)");
-            }
-            else
-            {
-                Console.WriteLine($"P[{winnerNo}] 는 2배만을 선택");
-            }
             string inputText = "";
             int input = 0;
-
             if ( winnerNo == 0)
             {
+                Console.WriteLine($"P[{winnerNo}] 는 이번 라운드의 배수를 선택하세요. (1: 1배, 2: 2배, 4: 4배, 8: 8배)");
                 inputText = Console.ReadLine();
                 input = int.Parse(inputText);
             }
             else
             {
+                Console.WriteLine($"P[{winnerNo}] 는 2배만을 선택");
                 input = 2;
             }
-            
+          
             // 선수들이 학교를 간다
             int totalBetMoney = 0;
 
@@ -107,7 +99,7 @@ namespace Shutta
                 Player p = players[winnerNo];
                 p.CalculateScore();
                 Console.WriteLine($"P{winnerNo} ({p[0]}, {p[1]}) => {p.Score}");
-                Console.WriteLine("콜 유형를 선택하세요. (1: 콜(기본), 2: 베팅(+100원), 3: 다이(포기, 1/2만 돌려받음))");
+                Console.WriteLine("콜 유형를 선택하세요. (1: 콜(기본), 2: 베팅(+100원 * 배수), 3: 다이(포기, 1/2만 돌려받음))");
                 inputText = Console.ReadLine();
                 input = int.Parse(inputText);
                 callType = (CallType)input;
@@ -117,16 +109,34 @@ namespace Shutta
                 callType = DecideCallType(players, winnerNo);
                 Console.WriteLine($"P[{winnerNo}]는 {callType}을 선택");
             }
-
-            if ( callType == CallType.Die)
+            if (callType == CallType.Die)
             {
                 Player p = players[winnerNo];
                 p.Money += BetMoney * input / 2;
                 totalBetMoney -= BetMoney * input / 2;
-                
-                
+            }
+            //if ( callType == CallType.Die)
+            //{
+            //    foreach (Player player in players)
+            //    {
+            //        if(player.Index == winnerNo)
+            //        {
+            //            player.Money += BetMoney * input / 2;
+            //            totalBetMoney -= BetMoney * input / 2;
+            //        }   
+            //    }
 
-            } else if (callType == CallType.Betting)
+            //    foreach (Player player in players)
+            //    {
+            //        if (player.Index != winnerNo)
+            //        {
+            //            player.Money += totalBetMoney / 2;
+            //        }
+            //    }
+
+
+            //}
+            else if (callType == CallType.Betting)
             {
                 foreach (Player player in players)
                 {

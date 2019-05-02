@@ -126,7 +126,7 @@ namespace Shutta
                 Console.WriteLine($"P{i} ({p[0]}, {p[1]}) => {p.Score}");
             }
 
-
+             
             // 승자와 패자를 가린다.
             Player winner = FindWinner(players);
 

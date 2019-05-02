@@ -14,16 +14,19 @@ namespace Shutta
             Money = money;
 
             _cards = new List<Card>();
+            _firstcards = new List<Card>();
 
         }
 
         public int Money { get; set; }
 
         private readonly List<Card> _cards;
-  
+        private readonly List<Card> _firstcards;
+
         public void AddCard(Card card)
         {
             _cards.Add(card);
+            _firstcards.Add(card);
         }
 
     
@@ -35,6 +38,10 @@ namespace Shutta
                 Score = (_cards[0].No + _cards[1].No) % 10; // 0 ~ 9
         }
 
+        public virtual void OrderScore()
+        {
+             Score = _firstcards[0].No; // 카드숫자
+        }
 
 
         public int Score { get; set; }
@@ -46,6 +53,7 @@ namespace Shutta
             {
                 return _cards[index];
             }
+
         }
 
         public void PrepareRound()

@@ -55,10 +55,10 @@ namespace Shutta
         public Card FirstDraw()
         {
             Card firstcard = _firstcards[_firstCardIndex];
-            _currentCardIndex++;
+            _firstCardIndex++;
 
             return firstcard;
-
+                
             //return _cards[_currentCardIndex++];
         }
 

@@ -9,6 +9,11 @@ namespace Shutta
     //internal class Card
     public class Card
     {
+        public Card(int no)
+        {
+            _no = no;
+        }
+
         public Card(int no, bool isKwang)
         {
             _no = no;

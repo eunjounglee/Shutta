@@ -44,11 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdvancedPlayer.cs" />
+    <Compile Include="BasicRule.cs" />
     <Compile Include="Card.cs" />
+    <Compile Include="AdvancedRule.cs" />
     <Compile Include="Dealer.cs" />
-    <Compile Include="..\..\..\..\..\..\shutta\Program.cs">
-      <Link>Program.cs</Link>
-    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="RuleType.cs" />

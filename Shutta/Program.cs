@@ -8,7 +8,7 @@ namespace Shutta
 {
     class Program
     {
-        public const int PlayerCount = 2;
+        public const int PlayerCount = 3;
         public const int SeedMoney = 500;
         private const int BetMoney = 100;
 
@@ -29,8 +29,8 @@ namespace Shutta
                 else if (ruleType == RuleType.Advanced)
                     players.Add(new AdvancedPlayer(SeedMoney));
             }
-                
 
+            int winnerNo = 1;
 
             int round = 1;
             // 선수 중 파산(오링)하는 사람이 있을 때 까지 라운드를 진행한다.
@@ -39,12 +39,10 @@ namespace Shutta
                 if (CanRunRound(players) == false)
                     break;
 
-
                 Console.WriteLine($"[Round {round++}]");
 
-
                 // 라운드를 진행한다
-                RunRound(players);
+                RunRound(players, winnerNo);
 
                 // 선수들이 가진 돈을 출력한다.
                 PrintMoney(players);
@@ -68,20 +66,26 @@ namespace Shutta
             return true;
         }
 
-        static void RunRound(List<Player> players)
+        static void RunRound(List<Player> players, int winnerNo)
         {
             // 각 선수가 이전 라운드에서 받은 카드를 클리어한다.
             foreach (Player player in players)
                 player.PrepareRound();
 
+            // 이전 라운드의 승자는 이번 라운드의 베팅 배수를 결정한다.
+            // 단, 1라운드일 경우 선을 결정하여 베팅 배수를 결정한다.
+            Console.WriteLine($"P[{winnerNo}] 는 이번 라운드의 배수를 선택하세요. (1: 1배, 2: 2배, 4: 4배, 8: 8배)");
+            string inputText = Console.ReadLine();
+            int input = int.Parse(inputText);
+            MultipleType multipleType = (MultipleType) input;
 
             // 선수들이 학교를 간다
             int totalBetMoney = 0;
 
             foreach (Player player in players)
             {
-                player.Money -= BetMoney;
-                totalBetMoney += BetMoney;
+                player.Money -= BetMoney * input;
+                totalBetMoney += BetMoney * input;
             }
 
 
@@ -90,6 +94,19 @@ namespace Shutta
             foreach (Player player in players)
                 for (int i = 0; i < 2; i++)
                     player.AddCard(dealer.Draw());
+
+            ////////inputtext = console.readline();
+            ////////input = int.parse(inputtext);
+            ////////calltype calltype = (calltype)input;
+
+            ////////if (calltype == calltype.betting)
+            ////////{
+            ////////    foreach (player player in players)
+            ////////    {
+            ////////        player.money -= betmoney * input;
+            ////////        totalbetmoney += betmoney * input;
+            ////////    }
+            ////////} 
 
 
             // 각 선수들의 족보를 계산하고 출력한다.
@@ -101,10 +118,8 @@ namespace Shutta
                 Console.WriteLine($"P{i} ({p[0]}, {p[1]}) => {p.Score}");
             }
 
-
             // 승자와 패자를 가린다.
             Player winner = FindWinner(players);
-
 
             //TODO : 승자가 1명 이상이면 베팅 머니를 돌려주고 라운드를 끝낸다.
 

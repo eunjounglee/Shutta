@@ -109,6 +109,8 @@ namespace Shutta
                 callType = DecideCallType(players, winnerNo);
                 Console.WriteLine($"P[{winnerNo}]는 {callType}을 선택");
             }
+
+
             if (callType == CallType.Die)
             {
                 Player p = players[winnerNo];
@@ -192,6 +194,22 @@ namespace Shutta
             return playerIndex;
             // return null;
             throw new Exception("승자를 찾을 수 없음");
+        }
+        
+        public static int FindTajja(List<Player> players)
+        {
+            int maxMoney = 0;
+            foreach (Player player in players)
+                if (player.Money > maxMoney)
+                    maxMoney = player.Money;
+
+            foreach (Player player in players)
+                if (player.Money == maxMoney)
+                {
+                    return player.Index;
+                }
+            // return null;
+            throw new Exception("타짜를 찾을 수 없음");
         }
 
         public static CallType DecideCallType(List<Player> players, int index)
